@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name         chaoxing-speedup
-// @version      0.1.0
+// @version      0.1.2
 // @description  a console helper for chaoxing
 // @author       Nugine
-// @date         2020-03-04
+// @date         2020-03-23
 // @match        *.chaoxing.com/*
 // @grant        none
 // @run-at       document-idle
@@ -71,11 +71,19 @@
         }
 
         play(idx = 0, rate = undefined) {
-            const video = this.vjs[idx].players.video;
+            const video = this.videos[idx];
             if (rate !== undefined) {
                 video.playbackRate(rate);
             }
             return video.play()
+        }
+
+        seek(idx, time) {
+            const video = this.videos[idx];
+            if (time < 0) {
+                time += video.duration();
+            }
+            video.currentTime(time);
         }
     }
 
